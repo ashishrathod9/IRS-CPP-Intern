@@ -1,0 +1,76 @@
+STEP 1: Forgot to unlock mutex
+
+function fn(mutex, dataSource):
+    mutex.lock()
+
+    buffer = create buffer
+    dataSource.read(buffer)
+    buffer.display()
+
+    return true
+    mutex not unlocked, deadlock occurs
+
+
+STEP 2: Early return skips unlock
+
+function fn(mutex, dataSource):
+    mutex.lock()
+
+    buffer = create buffer
+
+    if dataSource.read(buffer) == false:
+        return false
+        unlock not reached, deadlock occurs
+
+    buffer.display()
+
+    mutex.unlock()
+    return true
+
+
+STEP 3: Exception occurs, try catch required
+
+function fn(mutex, dataSource):
+    mutex.lock()
+
+    try:
+        buffer = create buffer
+
+        if dataSource.read(buffer) == false:
+            mutex.unlock()
+            return false
+
+        buffer.display()
+        may throw exception
+
+        mutex.unlock()
+        return true
+
+    catch any exception:
+        mutex.unlock()
+        rethrow exception
+
+    multiple unlock paths
+    error prone and hard to maintain
+
+
+STEP 4: RAII solution
+
+function fn(mutex, dataSource):
+    lockObject = RAII_lock(mutex)
+
+    buffer = create buffer
+
+    if dataSource.read(buffer) == false:
+        return false
+
+    buffer.display()
+
+    return true
+
+
+CORE IDEA
+
+Manual locking requires remembering unlock at every exit path.
+RAII locking ties unlock to object lifetime and is always safe.
+

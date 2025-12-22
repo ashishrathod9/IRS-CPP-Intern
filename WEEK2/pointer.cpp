@@ -1,52 +1,47 @@
 #include <iostream>
 using namespace std;
 
-void make100(int &x);
-void make200(int *p);
-void caller(void (*fp)());
-void greet();
-
-int main() {
-    int a = 10;
-    int *p = &a;
-    int &r = a;
-
-    cout << "a = " << a << endl;
-    cout << "*p = " << *p << endl;
-    cout << "r = " << r << endl;
-
-    make100(a);
-    cout << "After make100(a): " << a << endl;
-
-    make200(&a);
-    cout << "After make200(&a): " << a << endl;
-
-    int arr[3] = {10, 20, 30};
-    int *ptr = arr;
-    cout << "Pointer arithmetic: ";
-    cout << *ptr << " ";
-    ptr++;
-    cout << *ptr << " ";
-    ptr++;
-    cout << *ptr << endl;
-
-    caller(greet);
-
+int main()
+{
+    int num = 42;
+    int* ptr = &num;
+    
+    cout << "Value of num: " << num << endl;
+    cout << "Address of num: " << &num << endl;
+    cout << "Value stored in ptr (address): " << ptr << endl;
+    cout << "Value pointed to by ptr: " << *ptr << endl;
+    cout << endl;
+    
+    *ptr = 100;
+    cout << "After *ptr = 100:" << endl;
+    cout << "Value of num: " << num << endl;
+    cout << "Value pointed to by ptr: " << *ptr << endl;
+    cout << endl;
+    
+    int arr[] = {10, 20, 30, 40, 50};
+    int* arrPtr = arr;
+    
+    cout << "Array elements using pointer arithmetic:" << endl;
+    for (int i = 0; i < 5; i++) {
+        cout << "*(arrPtr + " << i << ") = " << *(arrPtr + i) << endl;
+    }
+    cout << endl;
+    
+    int value = 25;
+    int* p1 = &value;
+    int** p2 = &p1;
+    
+    cout << "Value: " << value << endl;
+    cout << "Using *p1: " << *p1 << endl;
+    cout << "Using **p2: " << **p2 << endl;
+    cout << endl;
+    
+    int* nullPtr = nullptr;
+    
+    if (nullPtr == nullptr) {
+        cout << "nullPtr is not pointing to anything" << endl;
+    }
+    cout << endl;
+    
     return 0;
-}
-
-void make100(int &x) {
-    x = 100;
-}
-
-void make200(int *p) {
-    *p = 200;
-}
-
-void greet() {
-    cout << "Hello from callback!" << endl;
-}
-
-void caller(void (*fp)()) {
-    fp();
 }
