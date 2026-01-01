@@ -1,0 +1,16 @@
+{
+    "address": {
+        "city": "ahmadabad",
+        "country": "india",
+        "pincode": "369933",
+        "state": "gujarat"
+    },
+    "age": 22,
+    "hobbies": [
+        "watching",
+        "reading",
+        "playing"
+    ],
+    "name": "bharat ",
+    "surname": "ladva"
+}
