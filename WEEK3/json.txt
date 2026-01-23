@@ -1,0 +1,3 @@
+json j_null;
+
+j_null={};
