@@ -1,0 +1,9 @@
+/home/ashish/Image_processing/build/Desktop-Debug/CMakeFiles/Image_processing.dir
+/home/ashish/Image_processing/build/Desktop-Debug/CMakeFiles/edit_cache.dir
+/home/ashish/Image_processing/build/Desktop-Debug/CMakeFiles/rebuild_cache.dir
+/home/ashish/Image_processing/build/Desktop-Debug/CMakeFiles/list_install_components.dir
+/home/ashish/Image_processing/build/Desktop-Debug/CMakeFiles/install.dir
+/home/ashish/Image_processing/build/Desktop-Debug/CMakeFiles/install/local.dir
+/home/ashish/Image_processing/build/Desktop-Debug/CMakeFiles/install/strip.dir
+/home/ashish/Image_processing/build/Desktop-Debug/CMakeFiles/Image_processing_autogen_timestamp_deps.dir
+/home/ashish/Image_processing/build/Desktop-Debug/CMakeFiles/Image_processing_autogen.dir
