@@ -1,11 +1,11 @@
 CXX = g++
 CXXFLAGS = -Wall -std=c++11
 
-program: main2.o Student.o
-	$(CXX) $(CXXFLAGS) main2.o Student.o -o program
+program1: main2.o Student.o
+	$(CXX) $(CXXFLAGS) main2.o Student.o -o program1
 
-program: main.o circle.o
-	$(CXX) $(CXXFLAGS) main.o circle.o -o program
+program2: main.o circle.o
+	$(CXX) $(CXXFLAGS) main.o circle.o -o program2
 
 main2.o: main2.cpp Student.h
 	$(CXX) $(CXXFLAGS) -c main2.cpp

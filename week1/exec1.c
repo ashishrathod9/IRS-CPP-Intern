@@ -14,3 +14,18 @@ int main (int argc, char *argv[]){
 
   return 0;
 }
+
+// execv("./exec2", args);
+// Replaces the current process image with the new program(exec2).
+
+//     That means :
+
+//     The code of exec1.c is discarded.
+
+//     The process continues execution as exec2.
+
+//     Same PID is reused.
+
+//     If execv() succeeds,
+//     control never returns to exec1.c.The line printf("back to exec1.c");
+// will not execute.

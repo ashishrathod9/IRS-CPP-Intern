@@ -4,7 +4,10 @@
 using json = nlohmann::json;
 using namespace std;
 
-class ConfigClass {
+// adl_serializer = serializer found via Argument - Dependent Lookup
+//  It’s a neat way to let you plug in custom serialization logic without modifying the library itself.
+class ConfigClass
+{
 public:
     string host;
     int port;
@@ -69,6 +72,7 @@ int main() {
     ConfigClass config_class("localhost", 8080, "admin", "admin123");
     ConfigStruct config_struct{"localhost", 8080, "admin", "admin123"};
 
+    // Serializing
     json j_class = config_class;
     json j_struct = config_struct;
 
@@ -83,6 +87,7 @@ int main() {
         "password": "admin123"
     })";
 
+    // Deserializing
     config_class = json::parse(json_string).get<ConfigClass>();
     config_struct = json::parse(json_string).get<ConfigStruct>();
 

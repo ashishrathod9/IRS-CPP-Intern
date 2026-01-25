@@ -10,7 +10,7 @@ long long bankBalance =0;
 void addMoney(long long val){
   m.lock();
   bankBalance += val;
-  m.unlock();x
+  m.unlock();
 }
 
 int main(){
