@@ -12,7 +12,7 @@ int factorial(int n) {
     if (result > INT_MAX) {
         throw range_error("Factorial result out of int range");
     }
-    return static_cast<int>(result);
+    return result;
 }
 
 int main() {
