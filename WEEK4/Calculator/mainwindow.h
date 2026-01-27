@@ -25,6 +25,8 @@ private:
 private slots:
     // void on_digit1_clicked();
 
+    void validateExpression();
+
     void on_pushButton_2_clicked();
 
     void on_pushButton_3_clicked();

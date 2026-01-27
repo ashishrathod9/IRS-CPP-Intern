@@ -52,62 +52,63 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    QImage grayImg(image.size(), QImage::Format_RGB32);
-    for (int y = 0; y < image.height(); y++)
-    {
-        for (int x = 0; x < image.width(); x++)
-        {
+    if (image.isNull()) return;
+
+    grayImg = QImage(image.size(), QImage::Format_RGB32);
+
+    int totalPixels = image.width() * image.height();
+    int processedPixels = 0;
+
+    ui->progressBar->setRange(0, 100);
+    ui->progressBar->setValue(0);
+
+    for (int y = 0; y < image.height(); y++) {
+        for (int x = 0; x < image.width(); x++) {
+
             QColor c = image.pixelColor(x, y);
+            int g = (c.red() + c.green() + c.blue()) / 3;
+            grayImg.setPixelColor(x, y, QColor(g, g, g));
 
-            int r = c.red();
-            int g = c.green();
-            int b = c.blue();
-            qDebug() <<r<<g<<b;
-            // -------- GRAYSCALE --------
-            int gray = (r + g + b) / 3;
-            grayImg.setPixelColor(x, y, QColor(gray, gray, gray));
+            processedPixels++;
 
-
+            if (x == image.width() - 1) {
+                int progress = (processedPixels * 100) / totalPixels;
+                ui->progressBar->setValue(progress);
+            }
         }
     }
+
+    ui->progressBar->setValue(100);
     ui->label->setPixmap(QPixmap::fromImage(grayImg));
 }
 
 
+
+
 void MainWindow::on_pushButton_3_clicked()
 {
-    float factor = 1.2f;     // contrast factor
-        // threshold value
+    if (image.isNull())
+        return;
 
-    QImage contrastImg(image.size(), QImage::Format_RGB32);
 
-    for (int y = 0; y < image.height(); y++)
-    {
-        for (int x = 0; x < image.width(); x++)
-        {
+    int spinValue = ui->spinBoxContrast->value();
+    float factor = spinValue ;
+
+
+    contrastImg = QImage(image.size(), QImage::Format_RGB32);
+
+    for (int y = 0; y < image.height(); y++) {
+        for (int x = 0; x < image.width(); x++) {
             QColor c = image.pixelColor(x, y);
 
-            int r = c.red();
-            int g = c.green();
-            int b = c.blue();
+            int r = qBound(0, int((c.red()   - 128) * factor + 128), 255);
+            int g = qBound(0, int((c.green() - 128) * factor + 128), 255);
+            int b = qBound(0, int((c.blue()  - 128) * factor + 128), 255);
 
-            // -------- GRAYSCALE --------
-            int gray = (r + g + b) / 3;
-
-
-            // -------- CONTRAST --------
-            int newR = (r - 128) * factor + 128;
-            int newG = (g - 128) * factor + 128;
-            int newB = (b - 128) * factor + 128;
-
-            newR = qBound(0, newR, 255);
-            newG = qBound(0, newG, 255);
-            newB = qBound(0, newB, 255);
-
-            contrastImg.setPixelColor(x, y, QColor(newR, newG, newB));
-
+            contrastImg.setPixelColor(x, y, QColor(r, g, b));
         }
     }
+
     ui->label->setPixmap(QPixmap::fromImage(contrastImg));
 }
 
@@ -116,6 +117,7 @@ void MainWindow::on_pushButton_4_clicked()
 {
     int threshold = 128;
 
+    if (!thresoldready) {
     for (int y = 0; y < image.height(); y++)
     {
         for (int x = 0; x < image.width(); x++)
@@ -130,12 +132,17 @@ void MainWindow::on_pushButton_4_clicked()
         }
     }
 
+    thresoldready=true;
+
+    }
+
     ui->label->setPixmap(QPixmap::fromImage(thresholdImg));
 }
 
 
 void MainWindow::on_pushButton_5_clicked()
 {
+    if(!pesudoready){
     for (int y = 0; y < image.height(); y++)
     {
         for (int x = 0; x < image.width(); x++)
@@ -150,6 +157,10 @@ void MainWindow::on_pushButton_5_clicked()
             else
                 pseudoImg.setPixelColor(x, y, QColor(255,0,0));
         }
+    }
+
+    pesudoready = true;
+
     }
 
     ui->label->setPixmap(QPixmap::fromImage(pseudoImg));

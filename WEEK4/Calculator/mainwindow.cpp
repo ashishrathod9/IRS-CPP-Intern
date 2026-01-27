@@ -5,15 +5,26 @@
 #include<QString>
 #include<stack>
 #include<QDebug>
+#include <QRegularExpression>
+#include <QRegularExpressionValidator>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    QRegularExpression regex("^[0-9+\\-*/.]*$");
+    QValidator *validator = new QRegularExpressionValidator(regex, this);
+    ui->lineEdit->setValidator(validator);
+
     connect(ui->pushButton,&QPushButton::clicked,this,[this](){
         ui->lineEdit->setText(ui->lineEdit->text()+"1");
     });
+
+    connect(ui->lineEdit, &QLineEdit::textChanged,
+            this, &MainWindow::validateExpression);
 }
 
 MainWindow::~MainWindow()
@@ -26,6 +37,37 @@ MainWindow::~MainWindow()
 //     ui->lineEdit->setText(ui->lineEdit->text()+"1");
 // }
 
+void MainWindow::validateExpression()
+{
+    QString expr = ui->lineEdit->text();
+
+
+    if (expr.isEmpty()) {
+        ui->pushButton_15->setEnabled(false); // "="
+        return;
+    }
+
+
+    QChar last = expr.back();
+    if (last == '+' || last == '-' || last == '*' || last == '/') {
+        ui->pushButton_15->setEnabled(false);
+        return;
+    }
+
+
+    for (int i = 1; i < expr.length(); i++) {
+        if (!expr[i].isDigit() &&
+            !expr[i-1].isDigit() &&
+            expr[i] != '.' && expr[i-1] != '.') {
+
+            ui->pushButton_15->setEnabled(false);
+            return;
+        }
+    }
+
+
+    ui->pushButton_15->setEnabled(true);
+}
 
 void MainWindow::on_pushButton_2_clicked()
 {

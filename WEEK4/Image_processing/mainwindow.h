@@ -24,6 +24,18 @@ private:
     QImage thresholdImg;
     QImage pseudoImg;
 
+    bool grayReady = false;
+
+
+    bool contrastReady = false;
+
+
+    bool thresoldready = false;
+
+    bool pesudoready = false;
+
+    int lastContrastValue = -1;
+
 private slots:
     void on_pushButton_clicked();
 
