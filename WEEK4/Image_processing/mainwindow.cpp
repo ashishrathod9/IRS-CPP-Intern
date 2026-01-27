@@ -54,6 +54,8 @@ void MainWindow::on_pushButton_2_clicked()
 {
     if (image.isNull()) return;
 
+    if(!grayready){
+
     grayImg = QImage(image.size(), QImage::Format_RGB32);
 
     int totalPixels = image.width() * image.height();
@@ -76,6 +78,9 @@ void MainWindow::on_pushButton_2_clicked()
                 ui->progressBar->setValue(progress);
             }
         }
+    }
+    grayready=true;
+
     }
 
     ui->progressBar->setValue(100);
